@@ -1,5 +1,5 @@
 #from textnode import TextNode, TextType
-import os, shutil
+import os, shutil, sys
 from helper import generate_pages_recursive
 
 def copy_files(source, dest):
@@ -15,10 +15,15 @@ def copy_files(source, dest):
         copy_files(os.path.join(source, f),os.path.join(dest,f))
 
 def main():
-    copy_files("static", "public")
+    basepath = sys.argv[1] if len(sys.argv) > 1 else "/"
+    #copy_files("static", "public")
+    if not basepath.endswith("/"):
+        basepath += "/"
+
     generate_pages_recursive('content',
                   'template.html',
-                  'public')
+                  'docs',
+                  "/")
     #tn = TextNode("what",TextType.BOLD)
     #print(tn)
 
